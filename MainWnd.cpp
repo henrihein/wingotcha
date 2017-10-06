@@ -10,12 +10,19 @@ const WCHAR CMainWindow::g_wszMainClass[] =  L"_GTDTPRMainWindow";
 const DT_KEYMATCH CMainWindow::g_key = { { VK_SHIFT, VK_CONTROL, 0 }, { VK_SHIFT, 0, 0 }, { 0, 0, 0 }, { VK_MENU, 0, 0 } };
 UINT	CMainWindow::g_wmTaskbarRestart = 0;
 
+//This is for testing the performance characteristics of 
+//GetTickCount vs GetSystemTime.  I prefer to use the latter,
+//for accuracy, but as a keyboard logger, performance is 
+//critical.  So far I have found GetSystemTime to be only
+//slightly slower, but also a curiously big variability
+//between systems.
 void CMainWindow::TestTimers()
 {
+#if 0
 	DWORD ticks = 0;
 	FILETIME ft;
 	LARGE_INTEGER pcStart, pcMid, pcEnd;
-	const DWORD loopCount = 2 * 80000;
+	const DWORD loopCount = 12000 * 80000;
 
 	QueryPerformanceCounter(&pcStart);
 	for (DWORD ix = 0; ix < loopCount; ix++)
@@ -26,6 +33,7 @@ void CMainWindow::TestTimers()
 		GetSystemTimeAsFileTime(&ft);
 	QueryPerformanceCounter(&pcEnd);
 	m_logger.LogTimeDiff(L"GetSystemTime", pcMid, pcEnd);
+#endif
 }
 
 

@@ -6,7 +6,6 @@ CLogger::CLogger(void)
 {
 }
 
-
 CLogger::~CLogger(void)
 {
 }
@@ -43,8 +42,17 @@ void CLogger::Log(LPCWSTR text, DWORD par)
 void CLogger::LogTime(LPCWSTR text, const LARGE_INTEGER &timeCount)
 {
 	WCHAR outText[400];
+	LARGE_INTEGER freq;
 
-	StringCbPrintfW(outText, sizeof(outText), L"%s TIMER %u.%u", text, timeCount.HighPart, timeCount.LowPart);
+	QueryPerformanceFrequency(&freq);
+	const LONGLONG cfreq		= freq.QuadPart;
+	const LONGLONG cft			= timeCount.QuadPart;
+	const LONGLONG cMilliSecs	= (cft / (cfreq / 1000));
+	const LONGLONG cSecsTotal	= cft / cfreq;
+	const LONGLONG cHours		= cSecsTotal / (60 * 60);
+	const LONGLONG cMins		= (cSecsTotal - cHours * 60 * 60) / 60;
+	const LONGLONG cSecsDisp	= (cSecsTotal - cHours * 60 * 60 - cMins * 60);
+	StringCbPrintfW(outText, sizeof(outText), L"%s TIMER %02u:%02u:%02u:%04u", text, cHours, cMins, cSecsDisp, cMilliSecs - cSecsTotal * 1000);
 	Log(outText);
 }
 
