@@ -11,7 +11,7 @@ void RunProtect()
     pMainWindow->Register();
     if (pMainWindow != NULL)
     {
-        WCHAR szTitle[DEFAULT_STRING_SIZE] = L"DesktopProtect";
+        WCHAR szTitle[DEFAULT_STRING_SIZE] = L"wingotcha";
         HWND hwnd = CreateWindowEx(
             WS_EX_TOPMOST,
             CMainWindow::g_wszMainClass,
@@ -36,15 +36,9 @@ void RunProtect()
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, PSTR , int)
 {
-    g_hInstance = hInstance;
-
-    // Initialize the GDI+ library
-    //CGdiplusInit GdiplusInit;
-
-    // Register window classes
-
     INITCOMMONCONTROLSEX iccex;
 
+	g_hInstance = hInstance;
     iccex.dwSize = sizeof(iccex);
     iccex.dwICC  = ICC_BAR_CLASSES;
     InitCommonControlsEx(&iccex);
@@ -55,7 +49,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, PSTR , int)
     {
         RunProtect();
         CoUninitialize();
+		return 0;
     }
-    return 0;
+    return 1;
 }
 

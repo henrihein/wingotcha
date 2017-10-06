@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by DesktopProtect.rc
+// Used by wingotcha.rc
 //
 #define WINDOW_MENU_POSITION            1
 #define IDS_APP_NAME                    1
